@@ -38,7 +38,7 @@ class Config(object):
     def __init__(self, config_path):
         try:
             with open(config_path, "r", encoding="utf-8") as yaml_file:
-                data = yaml.load(yaml_file)
+                data = yaml.load(yaml_file, Loader=yaml.FullLoader)
                 debug_level = data["DebugLevel"]
                 if debug_level == "debug":
                     self.debug_level = logging.DEBUG

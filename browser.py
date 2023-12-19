@@ -3,7 +3,10 @@
 
 
 import pickle
+import sys
+
 import requests
+import logging
 
 
 class Browser(object):
@@ -32,9 +35,14 @@ class Browser(object):
         http get
         """
         pass
-        response = self.session.get(url)
-        if response.status_code == 200:
-            self.session.headers['Referer'] = response.url
+        try:
+            response = self.session.get(url)
+            if response.status_code == 200:
+                self.session.headers['Referer'] = response.url
+        # except requests.exceptions.ConnectionError as e:
+        except Exception as e:
+            logging.error(repr(e))
+            sys.exit(-1)
         return response
 
     def post(self, url, data):
